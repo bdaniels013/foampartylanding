@@ -70,11 +70,11 @@ This is a high-priority booking request!
       `.trim());
       
       // Open email client
-      window.open(`mailto:info@gulfcoastfoamparty.com?subject=${emailSubject}&body=${emailBody}`);
+      window.open(`mailto:bookings@gulfcoastfoamparty.com?subject=${emailSubject}&body=${emailBody}`);
 
       // 3. Try to send to Formspree (optional)
       try {
-        await fetch('https://formspree.io/f/xayzqkqw', {
+        await fetch('https://formspree.io/f/xdklzrjd', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
