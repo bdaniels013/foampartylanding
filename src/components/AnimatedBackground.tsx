@@ -1,19 +1,7 @@
-import { motion } from 'motion/react';
-import { useEffect, useState, useMemo, useCallback } from 'react';
-
-interface Bubble {
-  id: number;
-  x: number;
-  y: number;
-  size: number;
-  color: string;
-  duration: number;
-  delay: number;
-}
+import { useEffect, useState } from 'react';
 
 export default function AnimatedBackground() {
   const [isReduced, setIsReduced] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
 
   // Check for reduced motion preference and performance
   useEffect(() => {
@@ -25,42 +13,8 @@ export default function AnimatedBackground() {
     const handleChange = () => setIsReduced(mediaQuery.matches);
     mediaQuery.addEventListener('change', handleChange);
     
-    // Delay animation start for better performance
-    const timer = setTimeout(() => setIsVisible(true), 100);
-    
-    return () => {
-      clearTimeout(timer);
-      mediaQuery.removeEventListener('change', handleChange);
-    };
+    return () => mediaQuery.removeEventListener('change', handleChange);
   }, []);
-
-  // Optimize bubble generation with useMemo and reduced complexity
-  const bubbles = useMemo(() => {
-    const colors = [
-      'rgba(255, 255, 255, 0.4)',
-      'rgba(219, 39, 119, 0.2)',
-      'rgba(59, 130, 246, 0.2)',
-      'rgba(34, 197, 94, 0.2)',
-    ];
-
-    // Significantly reduce bubbles for better performance
-    const bubbleCount = isReduced ? 8 : 15;
-    
-    return Array.from({ length: bubbleCount }, (_, i) => ({
-      id: i,
-      x: Math.random() * 100,
-      y: Math.random() * 100,
-      size: Math.random() * 20 + 10, // Smaller sizes
-      color: colors[Math.floor(Math.random() * colors.length)],
-      duration: Math.random() * 6 + 8, // Shorter durations
-      delay: Math.random() * 6,
-    }));
-  }, [isReduced]);
-
-  // Remove confetti for better performance
-  const shouldShowBubbles = useCallback(() => {
-    return isVisible && !isReduced;
-  }, [isVisible, isReduced]);
 
   if (isReduced) {
     return (
@@ -75,77 +29,16 @@ export default function AnimatedBackground() {
       {/* Static Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-pink-50" />
       
-      {/* Optimized Floating Bubbles with GPU acceleration */}
-      {shouldShowBubbles() && bubbles.map((bubble) => (
-        <motion.div
-          key={bubble.id}
-          className="absolute rounded-full"
-          style={{
-            left: `${bubble.x}%`,
-            width: `${bubble.size}px`,
-            height: `${bubble.size}px`,
-            backgroundColor: bubble.color,
-            willChange: 'transform',
-            transform: 'translateZ(0)', // Force GPU acceleration
-          }}
-          initial={{ y: '100vh', opacity: 0 }}
-          animate={{
-            y: '-15vh',
-            opacity: [0, 0.6, 0.6, 0],
-            x: [0, Math.random() * 40 - 20], // Reduced movement
-          }}
-          transition={{
-            duration: bubble.duration,
-            delay: bubble.delay,
-            repeat: Infinity,
-            ease: 'linear',
-            type: 'tween', // Use tween for better performance
-          }}
-        />
-      ))}
-
-      {/* Simplified Background Effects with reduced complexity */}
-      {shouldShowBubbles() && (
-        <>
-          <motion.div
-            className="absolute top-10 left-10 w-60 h-60 rounded-full"
-            style={{ 
-              background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%)',
-              willChange: 'transform',
-              transform: 'translateZ(0)',
-            }}
-            animate={{
-              scale: [1, 1.1, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              type: 'tween',
-            }}
-          />
-
-          <motion.div
-            className="absolute bottom-20 right-20 w-48 h-48 rounded-full"
-            style={{ 
-              background: 'radial-gradient(circle, rgba(219, 39, 119, 0.1) 0%, transparent 70%)',
-              willChange: 'transform',
-              transform: 'translateZ(0)',
-            }}
-            animate={{
-              scale: [1.05, 1, 1.05],
-              opacity: [0.2, 0.1, 0.2],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              type: 'tween',
-            }}
-          />
-        </>
-      )}
+      {/* Simple, static decorative elements */}
+      <div className="absolute top-10 left-10 w-60 h-60 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 opacity-20" />
+      <div className="absolute bottom-20 right-20 w-48 h-48 rounded-full bg-gradient-to-br from-pink-100 to-pink-200 opacity-20" />
+      <div className="absolute top-1/2 left-1/3 w-32 h-32 rounded-full bg-gradient-to-br from-green-100 to-green-200 opacity-15" />
+      
+      {/* Subtle floating dots - very simple */}
+      <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-300 rounded-full opacity-30" />
+      <div className="absolute top-3/4 right-1/4 w-2 h-2 bg-pink-300 rounded-full opacity-30" />
+      <div className="absolute bottom-1/3 left-2/3 w-2 h-2 bg-green-300 rounded-full opacity-30" />
+      <div className="absolute top-1/2 right-1/3 w-2 h-2 bg-purple-300 rounded-full opacity-30" />
     </div>
   );
 }
