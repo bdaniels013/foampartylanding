@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 interface Bubble {
   id: number;
@@ -12,36 +12,69 @@ interface Bubble {
 }
 
 export default function AnimatedBackground() {
-  const [bubbles, setBubbles] = useState<Bubble[]>([]);
+  const [isReduced, setIsReduced] = useState(false);
 
+  // Check for reduced motion preference
   useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setIsReduced(mediaQuery.matches);
+    
+    const handleChange = () => setIsReduced(mediaQuery.matches);
+    mediaQuery.addEventListener('change', handleChange);
+    
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // Optimize bubble generation with useMemo
+  const bubbles = useMemo(() => {
     const colors = [
-      'rgba(255, 255, 255, 0.8)',
-      'rgba(219, 39, 119, 0.3)', // Pink
-      'rgba(59, 130, 246, 0.3)', // Blue
-      'rgba(34, 197, 94, 0.3)',  // Green
-      'rgba(168, 85, 247, 0.3)', // Purple
+      'rgba(255, 255, 255, 0.6)',
+      'rgba(219, 39, 119, 0.25)', // Pink
+      'rgba(59, 130, 246, 0.25)', // Blue
+      'rgba(34, 197, 94, 0.25)',  // Green
     ];
 
-    const newBubbles = Array.from({ length: 50 }, (_, i) => ({
+    // Reduce number of bubbles for better performance
+    const bubbleCount = isReduced ? 15 : 25;
+    
+    return Array.from({ length: bubbleCount }, (_, i) => ({
       id: i,
       x: Math.random() * 100,
       y: Math.random() * 100,
-      size: Math.random() * 40 + 10,
+      size: Math.random() * 30 + 15,
       color: colors[Math.floor(Math.random() * colors.length)],
-      duration: Math.random() * 10 + 15,
-      delay: Math.random() * 10,
+      duration: Math.random() * 8 + 12,
+      delay: Math.random() * 8,
     }));
+  }, [isReduced]);
 
-    setBubbles(newBubbles);
-  }, []);
+  // Optimize confetti generation
+  const confetti = useMemo(() => {
+    const confettiCount = isReduced ? 8 : 12;
+    
+    return Array.from({ length: confettiCount }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      rotation: Math.random() * 360,
+      duration: Math.random() * 6 + 10,
+      delay: Math.random() * 12,
+    }));
+  }, [isReduced]);
+
+  if (isReduced) {
+    return (
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-pink-50" />
+      </div>
+    );
+  }
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
       {/* Gradient Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-pink-50" />
       
-      {/* Floating Bubbles */}
+      {/* Optimized Floating Bubbles */}
       {bubbles.map((bubble) => (
         <motion.div
           key={bubble.id}
@@ -51,13 +84,13 @@ export default function AnimatedBackground() {
             width: `${bubble.size}px`,
             height: `${bubble.size}px`,
             backgroundColor: bubble.color,
-            filter: 'blur(1px)',
+            willChange: 'transform',
           }}
           initial={{ y: '100vh', opacity: 0 }}
           animate={{
-            y: '-20vh',
-            opacity: [0, 1, 1, 0],
-            x: [0, Math.random() * 100 - 50, Math.random() * 100 - 50],
+            y: '-15vh',
+            opacity: [0, 0.8, 0.8, 0],
+            x: [0, Math.random() * 60 - 30],
           }}
           transition={{
             duration: bubble.duration,
@@ -68,36 +101,40 @@ export default function AnimatedBackground() {
         />
       ))}
 
-      {/* Confetti Elements */}
-      {Array.from({ length: 20 }, (_, i) => (
+      {/* Reduced Confetti Elements */}
+      {confetti.map((item) => (
         <motion.div
-          key={`confetti-${i}`}
-          className="absolute w-2 h-8 bg-gradient-to-b from-pink-400 to-pink-600"
+          key={`confetti-${item.id}`}
+          className="absolute w-2 h-6 bg-gradient-to-b from-pink-400 to-pink-600 rounded-sm"
           style={{
-            left: `${Math.random() * 100}%`,
-            transform: `rotate(${Math.random() * 360}deg)`,
+            left: `${item.x}%`,
+            willChange: 'transform',
           }}
-          initial={{ y: '-10vh', opacity: 0 }}
+          initial={{ y: '-5vh', opacity: 0, rotate: item.rotation }}
           animate={{
-            y: '110vh',
+            y: '105vh',
             opacity: [0, 1, 1, 0],
-            rotate: [0, 360, 720],
+            rotate: [item.rotation, item.rotation + 180],
           }}
           transition={{
-            duration: Math.random() * 8 + 12,
-            delay: Math.random() * 15,
+            duration: item.duration,
+            delay: item.delay,
             repeat: Infinity,
             ease: 'linear',
           }}
         />
       ))}
 
-      {/* Large Background Foam Effects */}
+      {/* Optimized Background Foam Effects */}
       <motion.div
-        className="absolute top-10 left-10 w-96 h-96 bg-gradient-radial from-blue-200/20 to-transparent rounded-full"
+        className="absolute top-10 left-10 w-80 h-80 rounded-full"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%)',
+          willChange: 'transform'
+        }}
         animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.15, 1],
+          opacity: [0.2, 0.4, 0.2],
         }}
         transition={{
           duration: 8,
@@ -107,10 +144,14 @@ export default function AnimatedBackground() {
       />
 
       <motion.div
-        className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-radial from-pink-200/20 to-transparent rounded-full"
+        className="absolute bottom-20 right-20 w-72 h-72 rounded-full"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(219, 39, 119, 0.15) 0%, transparent 70%)',
+          willChange: 'transform'
+        }}
         animate={{
-          scale: [1.2, 1, 1.2],
-          opacity: [0.6, 0.3, 0.6],
+          scale: [1.1, 1, 1.1],
+          opacity: [0.4, 0.2, 0.4],
         }}
         transition={{
           duration: 10,
@@ -120,15 +161,19 @@ export default function AnimatedBackground() {
       />
 
       <motion.div
-        className="absolute top-1/2 left-1/2 w-64 h-64 bg-gradient-radial from-green-200/15 to-transparent rounded-full"
-        style={{ transform: 'translate(-50%, -50%)' }}
+        className="absolute top-1/2 left-1/2 w-60 h-60 rounded-full"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(34, 197, 94, 0.12) 0%, transparent 70%)',
+          transform: 'translate(-50%, -50%)',
+          willChange: 'transform'
+        }}
         animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.2, 0.4, 0.2],
-          rotate: [0, 180, 360],
+          scale: [1, 1.2, 1],
+          opacity: [0.15, 0.3, 0.15],
+          rotate: [0, 120, 240, 360],
         }}
         transition={{
-          duration: 12,
+          duration: 15,
           repeat: Infinity,
           ease: 'easeInOut',
         }}

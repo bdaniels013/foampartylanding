@@ -10,8 +10,8 @@ interface PackageComparisonProps {
 export default function PackageComparison({ onBookNow }: PackageComparisonProps) {
   const packages = [
     {
-      name: 'Basic Foam',
-      price: '$199',
+      name: 'Basic Package',
+      price: '$375',
       originalPrice: null,
       color: 'gray',
       icon: '🤍',
@@ -20,15 +20,16 @@ export default function PackageComparison({ onBookNow }: PackageComparisonProps)
         'Up to 15 kids',
         'White foam only',
         '2-hour party',
-        'Basic setup',
-        'Cleanup included'
+        'Professional setup & cleanup',
+        'Safe, biodegradable foam',
+        'Fully insured service'
       ],
       popular: false
     },
     {
-      name: 'Color Foam',
-      price: '$199',
-      originalPrice: '$299',
+      name: 'Color Foam Premium',
+      price: '$375',
+      originalPrice: '$425',
       color: 'pink',
       icon: '🌈',
       description: 'Vibrant colored foam experience',
@@ -36,17 +37,18 @@ export default function PackageComparison({ onBookNow }: PackageComparisonProps)
         'Up to 15 kids',
         'Colorful foam (Pink, Blue, Purple)',
         '2-hour party',
-        'Enhanced setup',
-        'Cleanup included',
-        'Color-changing effects'
+        'Enhanced setup & cleanup',
+        'Color-changing effects',
+        'Premium foam quality',
+        'Save $50 today!'
       ],
       popular: true,
       upgrade: true
     },
     {
-      name: 'Glow Foam',
-      price: '$199',
-      originalPrice: '$349',
+      name: 'Glow Foam Deluxe',
+      price: '$375',
+      originalPrice: '$450',
       color: 'green',
       icon: '💫',
       description: 'Magical glowing foam party',
@@ -55,9 +57,10 @@ export default function PackageComparison({ onBookNow }: PackageComparisonProps)
         'Glow-in-the-dark foam',
         '2-hour party',
         'LED lighting setup',
-        'Cleanup included',
-        'Night party ready',
-        'Blacklight effects'
+        'Professional setup & cleanup',
+        'Perfect for evening parties',
+        'Blacklight effects',
+        'Save $75 today!'
       ],
       popular: false,
       upgrade: true

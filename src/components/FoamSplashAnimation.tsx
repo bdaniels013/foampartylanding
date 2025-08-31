@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 interface FoamSplashAnimationProps {
   onAnimationComplete: () => void;
@@ -7,94 +7,150 @@ interface FoamSplashAnimationProps {
 
 export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashAnimationProps) {
   const [showSplash, setShowSplash] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 1200, height: 800 });
+
+  // Pre-calculate particle positions to avoid layout thrashing
+  const particles = useMemo(() => 
+    Array.from({ length: 12 }, (_, i) => ({
+      id: i,
+      initialX: 200 + (i * 80) + Math.random() * 100,
+      initialY: dimensions.height * 0.6,
+      finalX: 150 + (i * 90) + Math.random() * 150,
+      finalY: 100 + Math.random() * (dimensions.height * 0.5),
+      delay: Math.random() * 0.3,
+      size: 12 + Math.random() * 8
+    })), [dimensions]
+  );
 
   useEffect(() => {
+    // Get viewport dimensions safely
+    const updateDimensions = () => {
+      setDimensions({
+        width: typeof window !== 'undefined' ? window.innerWidth : 1200,
+        height: typeof window !== 'undefined' ? window.innerHeight : 800
+      });
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+
     // Start the splash animation after a brief delay
     const timer = setTimeout(() => {
       setShowSplash(true);
-    }, 2000);
+    }, 1500);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', updateDimensions);
+    };
   }, []);
 
   const handleSplashComplete = () => {
     setTimeout(() => {
       onAnimationComplete();
-    }, 1000);
+    }, 800);
   };
 
   return (
-    <div className="fixed inset-0 z-50 pointer-events-none">
-      {/* Background video simulation */}
+    <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden">
+      {/* Background with hardware acceleration */}
       <motion.div
         className="absolute inset-0 bg-gradient-to-b from-sky-300 via-blue-400 to-blue-600"
-        initial={{ scale: 1.2 }}
+        style={{ willChange: 'transform' }}
+        initial={{ scale: 1.1 }}
         animate={{ scale: 1 }}
-        transition={{ duration: 3, ease: "easeOut" }}
+        transition={{ duration: 2.5, ease: "easeOut" }}
       />
       
-      {/* Sliding person simulation */}
+      {/* Sliding person simulation with GPU acceleration */}
       <motion.div
-        className="absolute left-1/2 top-0 w-20 h-20 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full"
-        initial={{ x: -100, y: -100, scale: 0.5 }}
-        animate={{ x: -40, y: 300, scale: 1.2 }}
-        transition={{ duration: 2, ease: "easeIn" }}
+        className="absolute left-1/2 top-0 w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg"
+        style={{ willChange: 'transform' }}
+        initial={{ x: -80, y: -80, scale: 0.6 }}
+        animate={{ x: -32, y: 200, scale: 1 }}
+        transition={{ duration: 1.8, ease: "easeIn" }}
       />
 
       {/* Foam splash effect */}
       {showSplash && (
         <>
-          {/* Main splash */}
+          {/* Main splash with optimized radial gradient */}
           <motion.div
-            className="absolute inset-0 bg-gradient-radial from-white via-blue-100 to-transparent"
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 3, opacity: 0.9 }}
+            className="absolute inset-0"
+            style={{ 
+              background: 'radial-gradient(circle at center, rgba(255,255,255,0.9) 0%, rgba(219,234,254,0.6) 40%, transparent 70%)',
+              willChange: 'transform, opacity'
+            }}
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 2.5, opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 1.5, ease: "easeOut" }}
+            transition={{ duration: 1.2, ease: "easeOut" }}
             onAnimationComplete={handleSplashComplete}
           />
           
-          {/* Foam particles */}
-          {Array.from({ length: 20 }, (_, i) => (
+          {/* Optimized foam particles */}
+          {particles.map((particle) => (
             <motion.div
-              key={i}
-              className="absolute w-4 h-4 bg-white rounded-full opacity-80"
+              key={particle.id}
+              className="absolute rounded-full bg-white shadow-sm"
+              style={{ 
+                width: particle.size,
+                height: particle.size,
+                willChange: 'transform'
+              }}
               initial={{
-                x: Math.random() * window.innerWidth,
-                y: window.innerHeight * 0.6,
-                scale: 0
+                x: particle.initialX,
+                y: particle.initialY,
+                scale: 0,
+                opacity: 0.9
               }}
               animate={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
-                scale: [0, 1, 0],
+                x: particle.finalX,
+                y: particle.finalY,
+                scale: [0, 1.2, 0.8, 0],
+                opacity: [0.9, 1, 0.7, 0]
               }}
               transition={{
-                duration: 2,
-                delay: Math.random() * 0.5,
+                duration: 1.5,
+                delay: particle.delay,
                 ease: "easeOut"
               }}
             />
           ))}
           
-          {/* Colored foam splashes */}
+          {/* Optimized colored foam splashes */}
           <motion.div
-            className="absolute top-1/2 left-1/4 w-32 h-32 bg-gradient-to-br from-pink-400 to-pink-600 rounded-full blur-xl"
+            className="absolute top-1/2 left-1/4 w-24 h-24 rounded-full"
+            style={{ 
+              background: 'radial-gradient(circle, rgba(244,114,182,0.8) 0%, rgba(236,72,153,0.4) 70%, transparent 100%)',
+              filter: 'blur(8px)',
+              willChange: 'transform'
+            }}
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 2, opacity: 0.7 }}
-            transition={{ duration: 1, delay: 0.5 }}
+            animate={{ scale: 1.8, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
           />
           <motion.div
-            className="absolute top-1/3 right-1/4 w-24 h-24 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full blur-xl"
+            className="absolute top-1/3 right-1/4 w-20 h-20 rounded-full"
+            style={{ 
+              background: 'radial-gradient(circle, rgba(96,165,250,0.8) 0%, rgba(59,130,246,0.4) 70%, transparent 100%)',
+              filter: 'blur(6px)',
+              willChange: 'transform'
+            }}
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1.5, opacity: 0.6 }}
-            transition={{ duration: 1, delay: 0.7 }}
+            animate={{ scale: 1.5, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
           />
           <motion.div
-            className="absolute bottom-1/3 left-1/3 w-28 h-28 bg-gradient-to-br from-green-400 to-green-600 rounded-full blur-xl"
+            className="absolute bottom-1/3 left-1/3 w-22 h-22 rounded-full"
+            style={{ 
+              background: 'radial-gradient(circle, rgba(74,222,128,0.8) 0%, rgba(34,197,94,0.4) 70%, transparent 100%)',
+              filter: 'blur(10px)',
+              willChange: 'transform'
+            }}
             initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1.8, opacity: 0.5 }}
-            transition={{ duration: 1, delay: 0.9 }}
+            animate={{ scale: 1.6, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.7, ease: "easeOut" }}
           />
         </>
       )}

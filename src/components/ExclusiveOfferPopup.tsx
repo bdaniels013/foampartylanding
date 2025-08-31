@@ -155,10 +155,17 @@ export default function ExclusiveOfferPopup({ isVisible, onClose, onBookNow }: E
             </h2>
 
             {/* Sub-text */}
-            <p className="text-lg text-gray-700 mb-6">
+            <p className="text-lg text-gray-700 mb-4">
               Book today and get <span className="font-bold text-pink-600">COLOR FOAM</span> or{' '}
               <span className="font-bold text-green-600">GLOW FOAM</span> for the same price as a Basic Party.
             </p>
+            
+            {/* Savings callout */}
+            <div className="bg-yellow-100 border border-yellow-300 rounded-lg p-3 mb-4">
+              <p className="text-sm text-yellow-800">
+                💰 <span className="font-bold">Save $50</span> on Color Foam or <span className="font-bold">Save $75</span> on Glow Foam!
+              </p>
+            </div>
 
             <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white px-4 py-2 rounded-full text-sm mb-6 inline-block">
               Limited Time Only

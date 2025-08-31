@@ -127,6 +127,23 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Performance optimizations for animations */
+  [class*="motion"] {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+  
+  /* Optimize blur effects */
+  [style*="blur"] {
+    transform: translateZ(0);
+    will-change: filter;
+  }
+  
+  /* GPU acceleration for gradients */
+  [class*="gradient"] {
+    transform: translateZ(0);
+  }
 }
 
 /**
