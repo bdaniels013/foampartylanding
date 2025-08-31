@@ -40,13 +40,72 @@ export default function BookingForm({ className }: BookingFormProps) {
     setError('');
 
     try {
-      // Simple, reliable form submission
-      // For now, we'll simulate a successful submission
-      // In production, you can connect this to Formspree, Netlify Forms, or your own backend
+      // 1. Store locally as backup
+      const bookings = JSON.parse(localStorage.getItem('foamPartyBookings') || '[]');
+      bookings.push({
+        ...formData,
+        timestamp: new Date().toISOString()
+      });
+      localStorage.setItem('foamPartyBookings', JSON.stringify(bookings));
+
+      // 2. Send to your email via mailto (immediate)
+      const emailSubject = encodeURIComponent(`🎉 NEW FOAM PARTY BOOKING - ${formData.name}`);
+      const emailBody = encodeURIComponent(`
+NEW FOAM PARTY BOOKING REQUEST!
+
+👤 Parent/Guardian: ${formData.name}
+📧 Email: ${formData.email}
+📱 Phone: ${formData.phone}
+📅 Preferred Date: ${formData.date}
+⏰ Preferred Time: ${formData.time}
+👶 Number of Kids: ${formData.partySize}
+📍 Location: ${formData.location}
+✨ Package Selected: ${formData.package}
+
+📞 CONTACT THEM IMMEDIATELY to confirm!
+📱 Call: ${formData.phone}
+📧 Email: ${formData.email}
+
+This is a high-priority booking request!
+      `.trim());
       
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      // Open email client
+      window.open(`mailto:info@gulfcoastfoamparty.com?subject=${emailSubject}&body=${emailBody}`);
+
+      // 3. Try to send to Formspree (optional)
+      try {
+        await fetch('https://formspree.io/f/xayzqkqw', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            date: formData.date,
+            time: formData.time,
+            partySize: formData.partySize,
+            location: formData.location,
+            package: formData.package,
+            message: `NEW FOAM PARTY BOOKING: ${formData.name} - ${formData.phone} - ${formData.date}`,
+          }),
+        });
+      } catch (error) {
+        console.log('Formspree failed, but lead was captured locally and email opened');
+      }
+
+      // 4. Send immediate notification (if supported)
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: '🎉 NEW FOAM PARTY BOOKING!',
+            text: `New booking from ${formData.name} - ${formData.phone} - ${formData.date} at ${formData.time}`,
+            url: window.location.href
+          });
+        } catch (error) {
+          console.log('Native share failed');
+        }
+      }
+
       // Success! Show confirmation
       setIsSubmitted(true);
       
@@ -63,22 +122,7 @@ export default function BookingForm({ className }: BookingFormProps) {
         timestamp: new Date().toISOString()
       });
 
-      // Store in localStorage for backup
-      const bookings = JSON.parse(localStorage.getItem('foamPartyBookings') || '[]');
-      bookings.push({
-        ...formData,
-        timestamp: new Date().toISOString()
-      });
-      localStorage.setItem('foamPartyBookings', JSON.stringify(bookings));
-
-      // Send immediate notification (you can configure this)
-      if (navigator.share) {
-        navigator.share({
-          title: 'New Foam Party Booking!',
-          text: `New booking from ${formData.name} - ${formData.phone}`,
-          url: window.location.href
-        });
-      }
+      console.log('✅ Lead sent to: Local Storage, Email Client, Formspree (if available)');
 
     } catch (error) {
       console.error('Booking submission failed:', error);
@@ -305,9 +349,9 @@ export default function BookingForm({ className }: BookingFormProps) {
                     animate={{ opacity: [1, 0.5, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                   >
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Sending Your Request...
-                  </motion.div>
+                                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Sending Your Request...
+                </motion.div>
                 ) : (
                   'Book My Foam Party! 🎉'
                 )}
