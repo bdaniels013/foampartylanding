@@ -33,6 +33,27 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
     }, 1200);
   };
 
+  // Array of all your foam party images
+  const foamImages = [
+    '/assets/pinkfoam.JPG',
+    '/assets/gcfpcannonshot.JPG',
+    '/assets/glowfoam.JPG',
+    '/assets/IMG_0738.JPG',
+    '/assets/IMG_0739.JPG',
+    '/assets/IMG_0740.JPG',
+    '/assets/IMG_0734.JPG',
+    '/assets/IMG_0736.JPG',
+    '/assets/IMG_0737.JPG',
+    '/assets/IMG_0730.JPG',
+    '/assets/IMG_0732.JPG',
+    '/assets/IMG_0722.JPG',
+    '/assets/IMG_0725.JPG',
+    '/assets/IMG_0726.JPG',
+    '/assets/IMG_0727.JPG',
+    '/assets/IMG_0715.JPG',
+    '/assets/IMG_0721.JPG'
+  ];
+
   return (
     <div className="fixed inset-0 z-50 pointer-events-none overflow-hidden">
       {/* Animated background gradient */}
@@ -102,7 +123,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           />
           
           {/* Foam particles flying everywhere - MORE PARTICLES */}
-          {Array.from({ length: 35 }, (_, i) => (
+          {Array.from({ length: 40 }, (_, i) => (
             <motion.div
               key={i}
               className="absolute w-5 h-5 bg-white rounded-full shadow-xl"
@@ -126,7 +147,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           ))}
           
           {/* Large foam bubbles - MORE BUBBLES */}
-          {Array.from({ length: 15 }, (_, i) => (
+          {Array.from({ length: 20 }, (_, i) => (
             <motion.div
               key={`bubble-${i}`}
               className="absolute bg-white/90 rounded-full shadow-2xl"
@@ -152,65 +173,101 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
             />
           ))}
           
-          {/* Colored foam splashes using your images - NO BLUR, CRYSTAL CLEAR */}
-          <motion.div
-            className="absolute top-1/4 left-1/4 w-40 h-40 rounded-full overflow-hidden shadow-2xl"
-            style={{
-              background: `url('/assets/pinkfoam.JPG') center/cover`,
-              filter: 'brightness(1.1) contrast(1.1)'
-            }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 2.5, opacity: 0.9 }}
-            transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
-          />
+          {/* EPIC FOAM IMAGE SPLASHES - Using ALL your photos */}
+          {foamImages.map((image, index) => (
+            <motion.div
+              key={`foam-image-${index}`}
+              className="absolute rounded-full overflow-hidden shadow-2xl"
+              style={{
+                background: `url('${image}') center/cover`,
+                filter: 'brightness(1.1) contrast(1.05)',
+                width: `${Math.random() * 60 + 40}px`,
+                height: `${Math.random() * 60 + 40}px`,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`
+              }}
+              initial={{ scale: 0, opacity: 0 }}
+              animate={{ 
+                scale: Math.random() * 1.5 + 1.5, 
+                opacity: 0.8 + Math.random() * 0.2 
+              }}
+              transition={{ 
+                duration: 1.5, 
+                delay: index * 0.1, 
+                ease: "easeOut" 
+              }}
+            />
+          ))}
           
+          {/* Additional large foam image splashes for key photos */}
           <motion.div
-            className="absolute top-1/3 right-1/4 w-36 h-36 rounded-full overflow-hidden shadow-2xl"
+            className="absolute top-1/4 left-1/4 w-48 h-48 rounded-full overflow-hidden shadow-2xl"
             style={{
-              background: `url('/assets/gcfpcannonshot.JPG') center/cover`,
-              filter: 'brightness(1.05) contrast(1.05)'
-            }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 2.2, opacity: 0.85 }}
-            transition={{ duration: 1.5, delay: 0.4, ease: "easeOut" }}
-          />
-          
-          <motion.div
-            className="absolute bottom-1/3 left-1/3 w-32 h-32 rounded-full overflow-hidden shadow-2xl"
-            style={{
-              background: `url('/assets/pinkfoam.JPG') center/cover`,
-              filter: 'brightness(1.15) contrast(1.1)'
-            }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 2, opacity: 0.8 }}
-            transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }}
-          />
-          
-          {/* Additional foam image splashes */}
-          <motion.div
-            className="absolute top-1/2 right-1/3 w-28 h-28 rounded-full overflow-hidden shadow-2xl"
-            style={{
-              background: `url('/assets/gcfpcannonshot.JPG') center/cover`,
-              filter: 'brightness(1.1) contrast(1.05)'
-            }}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1.8, opacity: 0.75 }}
-            transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
-          />
-          
-          <motion.div
-            className="absolute bottom-1/4 right-1/4 w-44 h-44 rounded-full overflow-hidden shadow-2xl"
-            style={{
-              background: `url('/assets/pinkfoam.JPG') center/cover`,
+              background: `url('/assets/glowfoam.JPG') center/cover`,
               filter: 'brightness(1.2) contrast(1.1)'
             }}
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 2.8, opacity: 0.9 }}
+            transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
+          />
+          
+          <motion.div
+            className="absolute top-1/3 right-1/4 w-44 h-44 rounded-full overflow-hidden shadow-2xl"
+            style={{
+              background: `url('/assets/IMG_0725.JPG') center/cover`,
+              filter: 'brightness(1.1) contrast(1.05)'
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 2.5, opacity: 0.85 }}
+            transition={{ duration: 1.5, delay: 0.4, ease: "easeOut" }}
+          />
+          
+          <motion.div
+            className="absolute bottom-1/3 left-1/3 w-40 h-40 rounded-full overflow-hidden shadow-2xl"
+            style={{
+              background: `url('/assets/IMG_0738.JPG') center/cover`,
+              filter: 'brightness(1.15) contrast(1.1)'
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 2.2, opacity: 0.8 }}
+            transition={{ duration: 1.5, delay: 0.6, ease: "easeOut" }}
+          />
+          
+          <motion.div
+            className="absolute top-1/2 right-1/3 w-36 h-36 rounded-full overflow-hidden shadow-2xl"
+            style={{
+              background: `url('/assets/IMG_0726.JPG') center/cover`,
+              filter: 'brightness(1.1) contrast(1.05)'
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 2, opacity: 0.75 }}
+            transition={{ duration: 1.5, delay: 0.8, ease: "easeOut" }}
+          />
+          
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-52 h-52 rounded-full overflow-hidden shadow-2xl"
+            style={{
+              background: `url('/assets/IMG_0734.JPG') center/cover`,
+              filter: 'brightness(1.2) contrast(1.1)'
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 3, opacity: 0.9 }}
             transition={{ duration: 1.5, delay: 1, ease: "easeOut" }}
           />
           
+          <motion.div
+            className="absolute top-1/6 left-1/6 w-38 h-38 rounded-full overflow-hidden shadow-2xl"
+            style={{
+              background: `url('/assets/IMG_0739.JPG') center/cover`,
+              filter: 'brightness(1.1) contrast(1.05)'
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1.8, opacity: 0.8 }}
+            transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
+          />
+          
           {/* Floating foam pieces - MORE PIECES */}
-          {Array.from({ length: 20 }, (_, i) => (
+          {Array.from({ length: 25 }, (_, i) => (
             <motion.div
               key={`foam-piece-${i}`}
               className="absolute w-8 h-8 bg-white/95 rounded-full shadow-lg"
@@ -235,7 +292,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           ))}
           
           {/* Sparkle effects - MORE SPARKLES */}
-          {Array.from({ length: 25 }, (_, i) => (
+          {Array.from({ length: 30 }, (_, i) => (
             <motion.div
               key={`sparkle-${i}`}
               className="absolute w-3 h-3 bg-yellow-300 rounded-full shadow-lg"
@@ -258,7 +315,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           ))}
           
           {/* Foam stream effects */}
-          {Array.from({ length: 8 }, (_, i) => (
+          {Array.from({ length: 10 }, (_, i) => (
             <motion.div
               key={`stream-${i}`}
               className="absolute bg-white/80 rounded-full"
@@ -283,7 +340,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           ))}
           
           {/* Foam wave effects */}
-          {Array.from({ length: 6 }, (_, i) => (
+          {Array.from({ length: 8 }, (_, i) => (
             <motion.div
               key={`wave-${i}`}
               className="absolute bg-white/70 rounded-full"

@@ -236,8 +236,8 @@ export default function App() {
                 >
                   <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                     <ImageWithFallback
-                      src="/assets/pinkfoam.JPG"
-                      alt="Kids having an amazing time with pink foam at a foam party"
+                      src="/assets/IMG_0725.JPG"
+                      alt="Kids having an amazing time at an epic foam party"
                       className="w-full h-[500px] object-cover"
                       fallback={
                         <div className="w-full h-[500px] bg-gradient-to-br from-pink-400 to-blue-400 rounded-2xl flex items-center justify-center">
