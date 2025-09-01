@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'motion/react';
 import { Button } from './components/ui/button';
 import { Phone, Mail, MapPin, Star, Menu, X } from 'lucide-react';
@@ -9,6 +9,8 @@ import TestimonialsCarousel from './components/TestimonialsCarousel';
 import AnimatedBackground from './components/AnimatedBackground';
 import UrgencyBanner from './components/UrgencyBanner';
 import PackageComparison from './components/PackageComparison';
+import CountdownTimer from './components/CountdownTimer';
+import Logo from './components/Logo';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 
 export default function App() {
@@ -166,6 +168,16 @@ export default function App() {
                   >
                     Transform any backyard into a foam wonderland! Safe, clean, and guaranteed to create the most talked-about party of the year.
                   </motion.p>
+
+                  {/* Countdown Timer */}
+                  <motion.div
+                    className="mb-8"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.5 }}
+                  >
+                    <CountdownTimer />
+                  </motion.div>
 
                   <motion.div
                     className="flex flex-col sm:flex-row gap-4 mb-8"

@@ -48,33 +48,9 @@ export default function BookingForm({ className }: BookingFormProps) {
       });
       localStorage.setItem('foamPartyBookings', JSON.stringify(bookings));
 
-      // 2. Send to your email via mailto (immediate)
-      const emailSubject = encodeURIComponent(`🎉 NEW FOAM PARTY BOOKING - ${formData.name}`);
-      const emailBody = encodeURIComponent(`
-NEW FOAM PARTY BOOKING REQUEST!
-
-👤 Parent/Guardian: ${formData.name}
-📧 Email: ${formData.email}
-📱 Phone: ${formData.phone}
-📅 Preferred Date: ${formData.date}
-⏰ Preferred Time: ${formData.time}
-👶 Number of Kids: ${formData.partySize}
-📍 Location: ${formData.location}
-✨ Package Selected: ${formData.package}
-
-📞 CONTACT THEM IMMEDIATELY to confirm!
-📱 Call: ${formData.phone}
-📧 Email: ${formData.email}
-
-This is a high-priority booking request!
-      `.trim());
-      
-      // Open email client
-      window.open(`mailto:bookings@gulfcoastfoamparty.com?subject=${emailSubject}&body=${emailBody}`);
-
-      // 3. Try to send to Formspree (optional)
+      // 2. Send to Formspree (primary delivery method)
       try {
-        await fetch('https://formspree.io/f/xdklzrjd', {
+        const response = await fetch('https://formspree.io/f/xdklzrjd', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -89,11 +65,17 @@ This is a high-priority booking request!
             message: `NEW FOAM PARTY BOOKING: ${formData.name} - ${formData.phone} - ${formData.date}`,
           }),
         });
+        
+        if (response.ok) {
+          console.log('✅ Lead sent to Formspree successfully');
+        } else {
+          console.log('⚠️ Formspree submission failed, but lead captured locally');
+        }
       } catch (error) {
-        console.log('Formspree failed, but lead was captured locally and email opened');
+        console.log('⚠️ Formspree failed, but lead was captured locally');
       }
 
-      // 4. Send immediate notification (if supported)
+      // 3. Send immediate notification (if supported)
       if (navigator.share) {
         try {
           await navigator.share({
@@ -122,7 +104,7 @@ This is a high-priority booking request!
         timestamp: new Date().toISOString()
       });
 
-      console.log('✅ Lead sent to: Local Storage, Email Client, Formspree (if available)');
+      console.log('✅ Lead sent to: Local Storage, Formspree, Native Share (if available)');
 
     } catch (error) {
       console.error('Booking submission failed:', error);
