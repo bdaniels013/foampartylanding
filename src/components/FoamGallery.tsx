@@ -90,7 +90,7 @@ export default function FoamGallery({ onBookNow }: FoamGalleryProps) {
             </p>
             <button
               onClick={onBookNow}
-              className="bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg shadow-lg transform hover:scale-105 transition-all duration-300"
+              className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black px-8 py-4 rounded-xl font-bold text-lg shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-orange-600"
             >
               Book My Foam Party Now! 🫧
             </button>

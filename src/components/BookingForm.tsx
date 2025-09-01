@@ -258,6 +258,10 @@ export default function BookingForm({ className }: BookingFormProps) {
                     <SelectItem value="15:00">3:00 PM</SelectItem>
                     <SelectItem value="16:00">4:00 PM</SelectItem>
                     <SelectItem value="17:00">5:00 PM</SelectItem>
+                    <SelectItem value="18:00">6:00 PM</SelectItem>
+                    <SelectItem value="19:00">7:00 PM</SelectItem>
+                    <SelectItem value="20:00">8:00 PM</SelectItem>
+                    <SelectItem value="21:00">9:00 PM</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
