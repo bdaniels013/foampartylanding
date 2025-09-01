@@ -122,58 +122,58 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
             transition={{ duration: 1.8, delay: 0.3, ease: "easeOut" }}
           />
           
-          {/* Foam particles flying everywhere - MORE PARTICLES */}
-          {Array.from({ length: 40 }, (_, i) => (
+          {/* Foam particles flying everywhere - BETTER ORGANIZED */}
+          {Array.from({ length: 50 }, (_, i) => (
             <motion.div
               key={i}
-              className="absolute w-5 h-5 bg-white rounded-full shadow-xl"
+              className="absolute w-4 h-4 bg-white rounded-full shadow-xl"
               style={{ 
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                left: `${20 + (i % 8) * 10}%`,
+                top: `${30 + Math.floor(i / 8) * 8}%`
               }}
               initial={{ scale: 0, opacity: 0 }}
               animate={{
                 scale: [0, 1.2, 0.8, 0],
                 opacity: [0, 1, 0.8, 0],
-                y: [0, -Math.random() * 300 - 150],
-                x: [0, (Math.random() - 0.5) * 400]
+                y: [0, -Math.random() * 200 - 100],
+                x: [0, (Math.random() - 0.5) * 200]
               }}
               transition={{
                 duration: 2.5 + Math.random() * 1.5,
-                delay: i * 0.05,
+                delay: i * 0.03,
                 ease: "easeOut"
               }}
             />
           ))}
           
-          {/* Large foam bubbles - MORE BUBBLES */}
-          {Array.from({ length: 20 }, (_, i) => (
+          {/* Large foam bubbles - BETTER SPACED */}
+          {Array.from({ length: 25 }, (_, i) => (
             <motion.div
               key={`bubble-${i}`}
               className="absolute bg-white/90 rounded-full shadow-2xl"
               style={{
-                width: `${Math.random() * 80 + 50}px`,
-                height: `${Math.random() * 80 + 50}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                width: `${Math.random() * 60 + 40}px`,
+                height: `${Math.random() * 60 + 40}px`,
+                left: `${10 + (i % 5) * 16}%`,
+                top: `${20 + Math.floor(i / 5) * 15}%`
               }}
               initial={{ scale: 0, opacity: 0 }}
               animate={{
                 scale: [0, 1.3, 1.5, 0.9, 0],
                 opacity: [0, 0.9, 1, 0.7, 0],
-                y: [0, -Math.random() * 200 - 100],
-                x: [0, (Math.random() - 0.5) * 300],
+                y: [0, -Math.random() * 150 - 75],
+                x: [0, (Math.random() - 0.5) * 150],
                 rotate: [0, Math.random() * 720]
               }}
               transition={{
                 duration: 3 + Math.random() * 1.5,
-                delay: i * 0.1,
+                delay: i * 0.08,
                 ease: "easeOut"
               }}
             />
           ))}
           
-          {/* EPIC FOAM IMAGE SPLASHES - Using ALL your photos */}
+          {/* EPIC FOAM IMAGE SPLASHES - BETTER ORGANIZED */}
           {foamImages.map((image, index) => (
             <motion.div
               key={`foam-image-${index}`}
@@ -181,27 +181,27 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
               style={{
                 background: `url('${image}') center/cover`,
                 filter: 'brightness(1.1) contrast(1.05)',
-                width: `${Math.random() * 60 + 40}px`,
-                height: `${Math.random() * 60 + 40}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                width: `${Math.random() * 40 + 30}px`,
+                height: `${Math.random() * 40 + 30}px`,
+                left: `${15 + (index % 6) * 12}%`,
+                top: `${25 + Math.floor(index / 6) * 12}%`
               }}
               initial={{ scale: 0, opacity: 0 }}
               animate={{ 
-                scale: Math.random() * 1.5 + 1.5, 
+                scale: Math.random() * 1.2 + 1.3, 
                 opacity: 0.8 + Math.random() * 0.2 
               }}
               transition={{ 
                 duration: 1.5, 
-                delay: index * 0.1, 
+                delay: index * 0.06, 
                 ease: "easeOut" 
               }}
             />
           ))}
           
-          {/* Additional large foam image splashes for key photos */}
+          {/* Featured large foam image splashes - STRATEGICALLY PLACED */}
           <motion.div
-            className="absolute top-1/4 left-1/4 w-48 h-48 rounded-full overflow-hidden shadow-2xl"
+            className="absolute top-1/4 left-1/4 w-44 h-44 rounded-full overflow-hidden shadow-2xl"
             style={{
               background: `url('/assets/glowfoam.JPG') center/cover`,
               filter: 'brightness(1.2) contrast(1.1)'
@@ -212,7 +212,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           />
           
           <motion.div
-            className="absolute top-1/3 right-1/4 w-44 h-44 rounded-full overflow-hidden shadow-2xl"
+            className="absolute top-1/3 right-1/4 w-40 h-40 rounded-full overflow-hidden shadow-2xl"
             style={{
               background: `url('/assets/IMG_0725.JPG') center/cover`,
               filter: 'brightness(1.1) contrast(1.05)'
@@ -223,7 +223,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           />
           
           <motion.div
-            className="absolute bottom-1/3 left-1/3 w-40 h-40 rounded-full overflow-hidden shadow-2xl"
+            className="absolute bottom-1/3 left-1/3 w-36 h-36 rounded-full overflow-hidden shadow-2xl"
             style={{
               background: `url('/assets/IMG_0738.JPG') center/cover`,
               filter: 'brightness(1.15) contrast(1.1)'
@@ -234,7 +234,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           />
           
           <motion.div
-            className="absolute top-1/2 right-1/3 w-36 h-36 rounded-full overflow-hidden shadow-2xl"
+            className="absolute top-1/2 right-1/3 w-32 h-32 rounded-full overflow-hidden shadow-2xl"
             style={{
               background: `url('/assets/IMG_0726.JPG') center/cover`,
               filter: 'brightness(1.1) contrast(1.05)'
@@ -245,7 +245,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           />
           
           <motion.div
-            className="absolute bottom-1/4 right-1/4 w-52 h-52 rounded-full overflow-hidden shadow-2xl"
+            className="absolute bottom-1/4 right-1/4 w-48 h-48 rounded-full overflow-hidden shadow-2xl"
             style={{
               background: `url('/assets/IMG_0734.JPG') center/cover`,
               filter: 'brightness(1.2) contrast(1.1)'
@@ -256,7 +256,7 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
           />
           
           <motion.div
-            className="absolute top-1/6 left-1/6 w-38 h-38 rounded-full overflow-hidden shadow-2xl"
+            className="absolute top-1/6 left-1/6 w-36 h-36 rounded-full overflow-hidden shadow-2xl"
             style={{
               background: `url('/assets/IMG_0739.JPG') center/cover`,
               filter: 'brightness(1.1) contrast(1.05)'
@@ -266,99 +266,99 @@ export default function FoamSplashAnimation({ onAnimationComplete }: FoamSplashA
             transition={{ duration: 1.5, delay: 1.2, ease: "easeOut" }}
           />
           
-          {/* Floating foam pieces - MORE PIECES */}
-          {Array.from({ length: 25 }, (_, i) => (
+          {/* Floating foam pieces - BETTER DISTRIBUTED */}
+          {Array.from({ length: 30 }, (_, i) => (
             <motion.div
               key={`foam-piece-${i}`}
-              className="absolute w-8 h-8 bg-white/95 rounded-full shadow-lg"
+              className="absolute w-6 h-6 bg-white/95 rounded-full shadow-lg"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                left: `${5 + (i % 8) * 11}%`,
+                top: `${15 + Math.floor(i / 8) * 10}%`
               }}
               initial={{ scale: 0, opacity: 0 }}
               animate={{
                 scale: [0, 1.2, 0.9, 0],
                 opacity: [0, 1, 0.8, 0],
-                y: [0, -Math.random() * 150 - 75],
-                x: [0, (Math.random() - 0.5) * 200],
+                y: [0, -Math.random() * 120 - 60],
+                x: [0, (Math.random() - 0.5) * 150],
                 rotate: [0, Math.random() * 540]
               }}
               transition={{
                 duration: 2.2 + Math.random() * 0.8,
-                delay: i * 0.06,
-                ease: "easeOut"
-              }}
-            />
-          ))}
-          
-          {/* Sparkle effects - MORE SPARKLES */}
-          {Array.from({ length: 30 }, (_, i) => (
-            <motion.div
-              key={`sparkle-${i}`}
-              className="absolute w-3 h-3 bg-yellow-300 rounded-full shadow-lg"
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{
-                scale: [0, 1.5, 0],
-                opacity: [0, 1, 0],
-                y: [0, -Math.random() * 120 - 30]
-              }}
-              transition={{
-                duration: 1.2 + Math.random() * 0.8,
                 delay: i * 0.04,
                 ease: "easeOut"
               }}
             />
           ))}
           
-          {/* Foam stream effects */}
-          {Array.from({ length: 10 }, (_, i) => (
+          {/* Sparkle effects - BETTER SPACED */}
+          {Array.from({ length: 35 }, (_, i) => (
             <motion.div
-              key={`stream-${i}`}
-              className="absolute bg-white/80 rounded-full"
+              key={`sparkle-${i}`}
+              className="absolute w-2 h-2 bg-yellow-300 rounded-full shadow-lg"
               style={{
-                width: `${Math.random() * 20 + 10}px`,
-                height: `${Math.random() * 100 + 50}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                left: `${8 + (i % 7) * 12}%`,
+                top: `${10 + Math.floor(i / 7) * 12}%`
               }}
-              initial={{ scaleY: 0, opacity: 0 }}
+              initial={{ scale: 0, opacity: 0 }}
               animate={{
-                scaleY: [0, 1, 0.8, 0],
-                opacity: [0, 0.9, 0.6, 0],
-                y: [0, -Math.random() * 200 - 100]
+                scale: [0, 1.5, 0],
+                opacity: [0, 1, 0],
+                y: [0, -Math.random() * 100 - 25]
               }}
               transition={{
-                duration: 2 + Math.random() * 1,
-                delay: i * 0.12,
+                duration: 1.2 + Math.random() * 0.8,
+                delay: i * 0.03,
                 ease: "easeOut"
               }}
             />
           ))}
           
-          {/* Foam wave effects */}
-          {Array.from({ length: 8 }, (_, i) => (
+          {/* Foam stream effects - BETTER POSITIONED */}
+          {Array.from({ length: 12 }, (_, i) => (
+            <motion.div
+              key={`stream-${i}`}
+              className="absolute bg-white/80 rounded-full"
+              style={{
+                width: `${Math.random() * 15 + 8}px`,
+                height: `${Math.random() * 80 + 40}px`,
+                left: `${12 + (i % 6) * 13}%`,
+                top: `${18 + Math.floor(i / 6) * 14}%`
+              }}
+              initial={{ scaleY: 0, opacity: 0 }}
+              animate={{
+                scaleY: [0, 1, 0.8, 0],
+                opacity: [0, 0.9, 0.6, 0],
+                y: [0, -Math.random() * 150 - 75]
+              }}
+              transition={{
+                duration: 2 + Math.random() * 1,
+                delay: i * 0.1,
+                ease: "easeOut"
+              }}
+            />
+          ))}
+          
+          {/* Foam wave effects - BETTER SPACED */}
+          {Array.from({ length: 10 }, (_, i) => (
             <motion.div
               key={`wave-${i}`}
               className="absolute bg-white/70 rounded-full"
               style={{
-                width: `${Math.random() * 200 + 100}px`,
-                height: `${Math.random() * 40 + 20}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`
+                width: `${Math.random() * 150 + 80}px`,
+                height: `${Math.random() * 30 + 15}px`,
+                left: `${8 + (i % 5) * 16}%`,
+                top: `${22 + Math.floor(i / 5) * 12}%`
               }}
               initial={{ scaleX: 0, opacity: 0 }}
               animate={{
                 scaleX: [0, 1, 0.8, 0],
                 opacity: [0, 0.8, 0.5, 0],
-                y: [0, -Math.random() * 100 - 50]
+                y: [0, -Math.random() * 80 - 40]
               }}
               transition={{
                 duration: 2.5 + Math.random() * 1,
-                delay: i * 0.15,
+                delay: i * 0.12,
                 ease: "easeOut"
               }}
             />

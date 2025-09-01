@@ -197,7 +197,11 @@ export default function App() {
                       Book Your Party Now! 🎉
                     </Button>
                     <Button
-                      onClick={() => setShowOfferPopup(true)}
+                      onClick={() => {
+                        document.getElementById('packages')?.scrollIntoView({ 
+                          behavior: 'smooth' 
+                        });
+                      }}
                       variant="outline"
                       className="text-lg px-6 py-4 border-2 border-pink-500 text-pink-600 hover:bg-pink-500 hover:text-white rounded-xl transition-all duration-300"
                     >
