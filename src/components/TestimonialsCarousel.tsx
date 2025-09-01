@@ -1,52 +1,114 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Card, CardContent } from './ui/card';
 import { Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
-// REAL GOOGLE REVIEWS - Replace these with actual 5-star reviews from Google
-// Copy the review text from: https://www.google.com/search?q=gulf+coast+foam+party#mpd=~3387181890451968596/customers/reviews
-// Only include 5-star reviews as requested
+// REAL GOOGLE REVIEWS - 5-star reviews from actual customers
 const testimonials = [
   {
     id: 1,
-    name: "REAL REVIEWER NAME", // Replace with actual reviewer name from Google
-    location: "Biloxi, MS", // Replace with actual location
+    name: "Taylor",
+    location: "Gulf Coast, MS",
     rating: 5,
-    text: "PASTE REAL 5-STAR REVIEW TEXT HERE - Copy from Google reviews page",
-    image: "https://images.unsplash.com/photo-1630441467869-50289148c4b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGtpZHMlMjBwYXJ0eSUyMGNlbGVicmF0aW9ufGVufDF8fHx8MTc1NjY2NjQ3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    text: "We hired Gulf Coast Foam Party for an adult backyard party, and it was a total hit! Megan brought the energy, the setup was awesome, and the foam turned the whole night into an unforgettable experience. Megan was super professional, arrived on time, and made everything so easy. If you're looking to level up your next event, this is it. Highly recommend!",
+    image: "/assets/IMG_0725.JPG"
   },
   {
     id: 2,
-    name: "REAL REVIEWER NAME", // Replace with actual reviewer name from Google
-    location: "Gulfport, MS", // Replace with actual location
+    name: "Karla Owens",
+    location: "Gulf Coast, MS",
     rating: 5,
-    text: "PASTE REAL 5-STAR REVIEW TEXT HERE - Copy from Google reviews page",
-    image: "https://images.unsplash.com/photo-1563832708562-aaee7c31d8f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb2FtJTIwcGFydHklMjBraWRzJTIwYmlydGhkYXl8ZW58MXx8fHwxNzU2NjY2NDcwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    text: "Megan has always made foam party the best for our littles ❤️ 5 stars for sure!",
+    image: "/assets/pinkfoam.JPG"
   },
   {
     id: 3,
-    name: "REAL REVIEWER NAME", // Replace with actual reviewer name from Google
-    location: "Ocean Springs, MS", // Replace with actual location
+    name: "Evelyn McQueen",
+    location: "Gulf Coast, MS",
     rating: 5,
-    text: "PASTE REAL 5-STAR REVIEW TEXT HERE - Copy from Google reviews page",
-    image: "https://images.unsplash.com/photo-1703908496839-c1a26abcdff1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb2xvcmZ1bCUyMGZvYW0lMjBidWJibGVzfGVufDF8fHx8MTc1NjY2NjQ3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    text: "My kids had so much fun playing with their friends in the foam! Highly recommend!",
+    image: "/assets/IMG_0738.JPG"
   },
   {
     id: 4,
-    name: "REAL REVIEWER NAME", // Replace with actual reviewer name from Google
-    location: "Pascagoula, MS", // Replace with actual location
+    name: "Erin Fulcher",
+    location: "Gulf Coast, MS",
     rating: 5,
-    text: "PASTE REAL 5-STAR REVIEW TEXT HERE - Copy from Google reviews page",
-    image: "https://images.unsplash.com/photo-1563832708562-aaee7c31d8f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb2FtJTIwcGFydHklMjBraWRzJTIwYmlydGhkYXl8ZW58MXx8fHwxNzU2NjY2NDcwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    text: "This was the most fun party our kids have had! The weather did not look good, but Gulf Coast Foam Party showed up and was willing to still do the party! They were super nice and accommodating to make everything work even in the rain. They took many videos of our kids and kept the party going. I highly recommend them! You will have a blast!",
+    image: "/assets/IMG_0734.JPG"
   },
   {
     id: 5,
-    name: "REAL REVIEWER NAME", // Replace with actual reviewer name from Google
-    location: "Long Beach, MS", // Replace with actual location
+    name: "Geneva Dummer",
+    location: "Gulf Coast, MS",
     rating: 5,
-    text: "PASTE REAL 5-STAR REVIEW TEXT HERE - Copy from Google reviews page",
-    image: "https://images.unsplash.com/photo-1630441467869-50289148c4b9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxoYXBweSUyMGtpZHMlMjBwYXJ0eSUyMGNlbGVicmF0aW9ufGVufDF8fHx8MTc1NjY2NjQ3MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
+    text: "Great to work with!! The kids had so much fun!!",
+    image: "/assets/IMG_0726.JPG"
+  },
+  {
+    id: 6,
+    name: "Alexis Moody",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "I definitely recommend. Such a fun experience!!!!",
+    image: "/assets/glowfoam.JPG"
+  },
+  {
+    id: 7,
+    name: "Piper Tillman",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "Excellent experience with customizing our event and communication! They stayed during the whole event and kept everything running smoothly. Kids had the best time!",
+    image: "/assets/IMG_0739.JPG"
+  },
+  {
+    id: 8,
+    name: "Leslie Papania",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "Kids loved their Foam Experience! Very professional company. I highly recommend using them for your next kid or adult party!",
+    image: "/assets/IMG_0740.JPG"
+  },
+  {
+    id: 9,
+    name: "Julie Spoon",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "Very professional and courtesy company! We didn't have to do anything. They came in set up, the kids had a blast, and they handled take down and clean up. This was an event at our school and nothing we've ever done before was this easy! We will definitely be using Gulf Cost Foam Party again and highly recommend you give them a call!",
+    image: "/assets/IMG_0736.JPG"
+  },
+  {
+    id: 10,
+    name: "Amanda Rosetti",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "We had Gulf Coast Foam party come to our elementary school for an end of the year event for all students. Let me tell you, the smiles from the students were endless and they talked about this event for days, often describing it as 'the best day ever.' It is great because it caters to many kids at one time, causing no delay in FUN! Can't say enough about the fun day we had with Gulf Coast Foam Party and we hope to make it an annual event!",
+    image: "/assets/IMG_0737.JPG"
+  },
+  {
+    id: 11,
+    name: "April Chewning",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "Such great experience! They came and set up, maintained their machines and packed everything. The owners are the nicest and so easy to work with. I 10/10 recommend for an amazing unforgettable experience!",
+    image: "/assets/IMG_0730.JPG"
+  },
+  {
+    id: 12,
+    name: "Kristin Hall",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "My son has THE BEST TIME at his 9th birthday party, thanks to Gulf Coast Foam party! It was definitely a hit for all of the kids of all ages! They were on time and very professional! Definitely give them a call!",
+    image: "/assets/gcfpcannonshot.JPG"
+  },
+  {
+    id: 13,
+    name: "Kristan Ladner",
+    location: "Gulf Coast, MS",
+    rating: 5,
+    text: "We've used Gulf Coast Foam Party for THREE different birthday parties over the last two years. We've hosted two summer foam parties and one winter snow party. All of our events have been HUGE successes. The company provides kid-friendly music and various games. They are a ton of fun for all the kids, little and big ones!",
+    image: "/assets/IMG_0722.JPG"
   }
 ];
 
