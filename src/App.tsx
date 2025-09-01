@@ -352,15 +352,15 @@ export default function App() {
                   <div className="space-y-3">
                     <div className="flex items-center gap-3">
                       <Phone size={16} />
-                      <a href="tel:(228)365-3626" className="hover:text-pink-400 transition-colors">
-                        (228) 365-3626
+                      <a href="tel:(228)364-3441" className="hover:text-pink-400 transition-colors">
+                        (228) 364-3441
                       </a>
                     </div>
                     <div className="flex items-center gap-3">
                       <Mail size={16} />
-                      <a href="mailto:info@gulfcoastfoamparty.com" className="hover:text-pink-400 transition-colors">
-                        info@gulfcoastfoamparty.com
-                      </a>
+                                              <a href="mailto:bookings@gulfcoastfoamparty.com" className="hover:text-pink-400 transition-colors">
+                          bookings@gulfcoastfoamparty.com
+                        </a>
                     </div>
                     <div className="flex items-center gap-3">
                       <MapPin size={16} />
