@@ -11,6 +11,8 @@ import UrgencyBanner from './components/UrgencyBanner';
 import PackageComparison from './components/PackageComparison';
 import CountdownTimer from './components/CountdownTimer';
 import Logo from './components/Logo';
+import FoamGallery from './components/FoamGallery';
+import FloatingActionButton from './components/FloatingActionButton';
 import { ImageWithFallback } from './components/figma/ImageWithFallback';
 
 export default function App() {
@@ -73,9 +75,14 @@ export default function App() {
               <div className="flex items-center gap-3">
                 <Logo size="sm" />
                 <div>
-                  <div className="font-bold text-lg bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent">
+                  <a 
+                    href="https://www.gulfcoastfoamparty.com" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="font-bold text-lg bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent hover:from-pink-700 hover:to-blue-700 transition-all duration-300"
+                  >
                     Gulf Coast Foam Party
-                  </div>
+                  </a>
                   <div className="text-xs text-gray-500">Making memories with foam!</div>
                 </div>
               </div>
@@ -229,9 +236,14 @@ export default function App() {
                 >
                   <div className="relative rounded-3xl overflow-hidden shadow-2xl">
                     <ImageWithFallback
-                      src="https://images.unsplash.com/photo-1563832708562-aaee7c31d8f5?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb2FtJTIwcGFydHklMjBraWRzJTIwYmlydGhkYXl8ZW58MXx8fHwxNzU2NjY2NDcwfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                      alt="Kids having fun at a foam party"
+                      src="/assets/pinkfoam.JPG"
+                      alt="Kids having an amazing time with pink foam at a foam party"
                       className="w-full h-[500px] object-cover"
+                      fallback={
+                        <div className="w-full h-[500px] bg-gradient-to-br from-pink-400 to-blue-400 rounded-2xl flex items-center justify-center">
+                          <div className="text-white text-4xl">🫧</div>
+                        </div>
+                      }
                     />
                     
                     {/* Floating elements */}
@@ -267,6 +279,11 @@ export default function App() {
           {/* Package Comparison */}
           <section id="packages" className="py-16 bg-white/50">
             <PackageComparison onBookNow={scrollToBooking} />
+          </section>
+
+          {/* Foam Gallery */}
+          <section id="gallery" className="py-16">
+            <FoamGallery onBookNow={scrollToBooking} />
           </section>
 
           {/* Testimonials */}
@@ -305,9 +322,14 @@ export default function App() {
                   <div className="flex items-center gap-3 mb-4">
                     <Logo size="sm" />
                     <div>
-                      <h3 className="font-bold text-xl bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+                      <a 
+                        href="https://www.gulfcoastfoamparty.com" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="font-bold text-xl bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent hover:from-pink-300 hover:to-blue-300 transition-all duration-300"
+                      >
                         Gulf Coast Foam Party
-                      </h3>
+                      </a>
                       <p className="text-gray-300 text-sm">Making memories with foam!</p>
                     </div>
                   </div>
@@ -369,6 +391,11 @@ export default function App() {
             </div>
           </footer>
         </main>
+      )}
+
+      {/* Floating Action Button */}
+      {!showSplashAnimation && (
+        <FloatingActionButton onBookNow={scrollToBooking} />
       )}
     </div>
   );
