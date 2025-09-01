@@ -71,9 +71,7 @@ export default function App() {
             <div className="flex items-center justify-between">
               {/* Logo */}
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xl">🫧</span>
-                </div>
+                <Logo size="sm" />
                 <div>
                   <div className="font-bold text-lg bg-gradient-to-r from-pink-600 to-blue-600 bg-clip-text text-transparent">
                     Gulf Coast Foam Party
@@ -305,10 +303,13 @@ export default function App() {
                 {/* Company Info */}
                 <div>
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-blue-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-xl">🫧</span>
+                    <Logo size="sm" />
+                    <div>
+                      <h3 className="font-bold text-xl bg-gradient-to-r from-pink-400 to-blue-400 bg-clip-text text-transparent">
+                        Gulf Coast Foam Party
+                      </h3>
+                      <p className="text-gray-300 text-sm">Making memories with foam!</p>
                     </div>
-                    <div className="font-bold text-xl">Gulf Coast Foam Party</div>
                   </div>
                   <p className="text-gray-400 mb-4">
                     Creating unforgettable foam party experiences across the Mississippi Gulf Coast.
