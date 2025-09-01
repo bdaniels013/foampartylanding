@@ -26,7 +26,7 @@ export default function Logo({ className = '', size = 'md' }: LogoProps) {
         <div className="w-full h-full flex items-center justify-center">
           {/* User's actual logo */}
           <img 
-            src="/assets/logo.png" 
+            src="/assets/gcfplogo.jpg" 
             alt="Gulf Coast Foam Party" 
             className="w-full h-full object-contain p-2"
           />
