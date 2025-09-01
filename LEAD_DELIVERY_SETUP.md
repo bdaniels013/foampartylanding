@@ -19,8 +19,8 @@ Your form now automatically:
 
 **To customize the email address:**
 1. Open `src/components/BookingForm.tsx`
-2. Find line: `window.open(\`mailto:info@gulfcoastfoamparty.com?subject=${emailSubject}&body=${emailBody}\`);`
-3. Change `info@gulfcoastfoamparty.com` to your preferred email
+2. Find line: `window.open(\`mailto:bookings@gulfcoastfoamparty.com?subject=${emailSubject}&body=${emailBody}\`);`
+3. Change `bookings@gulfcoastfoamparty.com` to your preferred email
 
 ## 📱 Formspree Setup (RECOMMENDED)
 

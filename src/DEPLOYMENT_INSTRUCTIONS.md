@@ -9,8 +9,8 @@ This is a high-converting landing page for Gulf Coast Foam Party built with Reac
 - **Glow Foam Deluxe**: $375 (normally $450 - FREE upgrade saves $75)
 
 ## Contact Information
-- **Phone**: (228) 365-3626
-- **Email**: info@gulfcoastfoamparty.com
+- **Phone**: (228) 364-3441
+- **Email**: bookings@gulfcoastfoamparty.com
 - **Service Areas**: Mississippi Gulf Coast (Biloxi, Gulfport, Ocean Springs, etc.)
 
 ## Deployment Options

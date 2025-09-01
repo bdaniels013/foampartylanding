@@ -108,7 +108,7 @@ export default function BookingForm({ className }: BookingFormProps) {
 
     } catch (error) {
       console.error('Booking submission failed:', error);
-      setError('There was an issue submitting your booking. Please call us directly at (228) 365-3626');
+      setError('There was an issue submitting your booking. Please call us directly at (228) 364-3441');
     } finally {
       setIsSubmitting(false);
     }
@@ -141,8 +141,8 @@ export default function BookingForm({ className }: BookingFormProps) {
               We've received your foam party request and will contact you within 1 hour to confirm all details!
             </p>
             <div className="text-sm text-green-600 space-y-2">
-              <p>📞 <strong>Call us now:</strong> <span className="font-bold text-lg">(228) 365-3626</span></p>
-              <p>📧 <strong>Email:</strong> <span className="font-bold">info@gulfcoastfoamparty.com</span></p>
+              <p>📞 <strong>Call us now:</strong> <span className="font-bold text-lg">(228) 364-3441</span></p>
+              <p>📧 <strong>Email:</strong> <span className="font-bold">bookings@gulfcoastfoamparty.com</span></p>
               <p className="text-xs mt-3 text-green-500">
                 Check your email for a confirmation message!
               </p>
@@ -341,7 +341,7 @@ export default function BookingForm({ className }: BookingFormProps) {
             </motion.div>
 
             <div className="text-center text-sm text-gray-600 mt-4">
-              <p>📞 Questions? Call us: <span className="font-bold text-blue-600">(228) 365-3626</span></p>
+              <p>📞 Questions? Call us: <span className="font-bold text-blue-600">(228) 364-3441</span></p>
               <p className="text-xs mt-1">We serve Biloxi, Gulfport, Ocean Springs & surrounding areas</p>
               <p className="text-xs mt-2 text-blue-600">✅ Real-time notifications sent to your phone & email!</p>
             </div>
