@@ -24,8 +24,8 @@ export default function CountdownTimer({ className }: CountdownTimerProps) {
 
       if (distance > 0) {
         setTimeLeft({
-          days: 0, // Not needed for 10-minute timer
-          hours: 0, // Not needed for 10-minute timer
+          days: 0,
+          hours: 0,
           minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
           seconds: Math.floor((distance % (1000 * 60)) / 1000)
         });
