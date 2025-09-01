@@ -1,12 +1,15 @@
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface FoamGalleryProps {
   onBookNow: () => void;
 }
 
 export default function FoamGallery({ onBookNow }: FoamGalleryProps) {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const images = [
     {
       src: '/assets/pinkfoam.JPG',
@@ -82,9 +85,31 @@ export default function FoamGallery({ onBookNow }: FoamGalleryProps) {
     }
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => 
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [images.length]);
+
+  const nextImage = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === images.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
     <section className="py-16 bg-gradient-to-br from-pink-50 via-white to-blue-50">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4">
         <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
@@ -99,80 +124,105 @@ export default function FoamGallery({ onBookNow }: FoamGalleryProps) {
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {images.map((image, index) => (
-            <motion.div
-              key={index}
-              className="group relative overflow-hidden rounded-2xl shadow-2xl"
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              whileHover={{ scale: 1.02 }}
-            >
-              <ImageWithFallback
-                src={image.src}
-                alt={image.alt}
-                className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
-                fallback={
-                  <div className="w-full h-64 bg-gradient-to-br from-pink-400 to-blue-400 flex items-center justify-center">
-                    <div className="text-white text-4xl">🫧</div>
-                  </div>
-                }
-              />
-              
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute bottom-4 left-4 right-4 text-white">
-                  <h3 className="text-lg font-bold mb-2">{image.title}</h3>
-                  <p className="text-sm opacity-90">{image.description}</p>
-                </div>
-              </div>
-
-              {/* Floating badge */}
-              <div className="absolute top-4 right-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-lg">
-                ✨ REAL PARTY
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Additional photo showcase */}
-        <motion.div
-          className="mb-12"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.2 }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {['IMG_0732.JPG', 'IMG_0722.JPG', 'IMG_0727.JPG', 'IMG_0715.JPG'].map((image, index) => (
+        {/* Photo Carousel */}
+        <div className="relative mb-12">
+          <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+            <AnimatePresence mode="wait">
               <motion.div
-                key={index}
-                className="relative overflow-hidden rounded-xl shadow-lg"
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
+                key={currentIndex}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.5 }}
+                className="relative"
               >
                 <ImageWithFallback
-                  src={`/assets/${image}`}
-                  alt={`Foam party photo ${index + 1}`}
-                  className="w-full h-32 object-cover"
+                  src={images[currentIndex].src}
+                  alt={images[currentIndex].alt}
+                  className="w-full h-[500px] object-cover"
                   fallback={
-                    <div className="w-full h-32 bg-gradient-to-br from-pink-400 to-blue-400 flex items-center justify-center">
-                      <div className="text-white text-2xl">🫧</div>
+                    <div className="w-full h-[500px] bg-gradient-to-br from-pink-400 to-blue-400 flex items-center justify-center">
+                      <div className="text-white text-4xl">🫧</div>
                     </div>
                   }
                 />
-                <div className="absolute inset-0 bg-black/20 hover:bg-black/0 transition-colors duration-300" />
+                
+                {/* Overlay with title and description */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
+                  <div className="absolute bottom-6 left-6 right-6 text-white">
+                    <h3 className="text-2xl font-bold mb-2">{images[currentIndex].title}</h3>
+                    <p className="text-lg opacity-90">{images[currentIndex].description}</p>
+                  </div>
+                </div>
+
+                {/* Floating badge */}
+                <div className="absolute top-6 right-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                  ✨ REAL PARTY
+                </div>
               </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation Arrows */}
+            <button
+              onClick={prevImage}
+              className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+            >
+              <ChevronLeft className="w-6 h-6 text-gray-600" />
+            </button>
+            
+            <button
+              onClick={nextImage}
+              className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-200 hover:scale-110"
+            >
+              <ChevronRight className="w-6 h-6 text-gray-600" />
+            </button>
+          </div>
+
+          {/* Thumbnail Navigation */}
+          <div className="flex justify-center mt-6 space-x-2 overflow-x-auto pb-2">
+            {images.map((image, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentIndex(index)}
+                className={`flex-shrink-0 relative overflow-hidden rounded-lg transition-all duration-200 ${
+                  index === currentIndex 
+                    ? 'ring-4 ring-pink-500 scale-110' 
+                    : 'ring-2 ring-gray-200 hover:ring-pink-300'
+                }`}
+              >
+                <ImageWithFallback
+                  src={image.src}
+                  alt={image.alt}
+                  className="w-16 h-12 object-cover"
+                  fallback={
+                    <div className="w-16 h-12 bg-gradient-to-br from-pink-400 to-blue-400 flex items-center justify-center">
+                      <div className="text-white text-sm">🫧</div>
+                    </div>
+                  }
+                />
+                {index === currentIndex && (
+                  <div className="absolute inset-0 bg-pink-500/20 flex items-center justify-center">
+                    <div className="w-2 h-2 bg-white rounded-full"></div>
+                  </div>
+                )}
+              </button>
             ))}
           </div>
-        </motion.div>
+
+          {/* Image Counter */}
+          <div className="text-center mt-4">
+            <span className="text-sm text-gray-600">
+              {currentIndex + 1} of {images.length} photos
+            </span>
+          </div>
+        </div>
 
         {/* Call to Action */}
         <motion.div
           className="text-center"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.4 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
           <div className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-2xl p-8 text-white shadow-2xl">
             <h3 className="text-2xl font-bold mb-4">Ready to Create Your Own Magic? 🎉</h3>
